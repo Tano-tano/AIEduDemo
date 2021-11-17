@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AIEduDemo</string>
+    <string name="start">はじめる</string>
+    <string name="credit">クレジット</string>
+    <string name="end">おわる</string>
+    <string name="title_name">手書き文字認識デモ</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
