@@ -10,12 +10,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AIEduDemo" >
 
+        <!-- アプリのルート画面 -->
         <activity android:name=".main.Menu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity android:name=".main.DrawDigit"/>
+        <activity android:name=".main.DrawChar"/>
+        <activity android:name=".main.DrawSelf"/>
 
     </application>
 
