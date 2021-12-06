@@ -3,13 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/ryota/AndroidStudioProjects/AIEduDemo/app/src/main/res/layout/drawchar.xml" value="0.13385416666666666" />
-        <entry key="..\:/Users/ryota/AndroidStudioProjects/AIEduDemo/app/src/main/res/layout/drawdigit.xml" value="0.13385416666666666" />
-        <entry key="..\:/Users/ryota/AndroidStudioProjects/AIEduDemo/app/src/main/res/layout/drawself.xml" value="0.13385416666666666" />
-        <entry key="..\:/Users/ryota/AndroidStudioProjects/AIEduDemo/app/src/main/res/layout/fragment_menu_experiment.xml" value="0.152" />
-        <entry key="..\:/Users/ryota/AndroidStudioProjects/AIEduDemo/app/src/main/res/layout/fragment_menu_study.xml" value="0.176" />
-        <entry key="..\:/Users/ryota/AndroidStudioProjects/AIEduDemo/app/src/main/res/layout/menu.xml" value="0.259375" />
         <entry key="app/src/main/res/drawable/circle.xml" value="0.20625" />
+        <entry key="app/src/main/res/layout/drawchar.xml" value="0.1921875" />
+        <entry key="app/src/main/res/layout/drawdigit.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_menu_experiment.xml" value="0.1921875" />
         <entry key="app/src/main/res/layout/fragment_menu_study.xml" value="0.1921875" />
         <entry key="app/src/main/res/layout/menu.xml" value="0.25" />
@@ -17,7 +13,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
