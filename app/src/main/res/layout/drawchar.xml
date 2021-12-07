@@ -6,19 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".main.DrawDigit">
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="413dp"
-        android:layout_height="406dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
 
-        <SurfaceView
-            android:id="@+id/surfaceView"
-            android:layout_width="match_parent"
-            android:layout_height="402dp" />
-    </FrameLayout>
+    <com.divyanshu.draw.widget.DrawView
+        android:id="@+id/draw_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/resetBtn"
@@ -46,25 +42,22 @@
         android:id="@+id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="68dp"
         android:text="書かれた文字は"
         android:textSize="40sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.122"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/draw_view"
+        tools:layout_editor_absoluteX="29dp" />
 
     <TextView
         android:id="@+id/resultNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="468dp"
+        android:layout_marginTop="60dp"
         android:text="？"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="55sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.65"
         app:layout_constraintStart_toEndOf="@+id/text1"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/draw_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

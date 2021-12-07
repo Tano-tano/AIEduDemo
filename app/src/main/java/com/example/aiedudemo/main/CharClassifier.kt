@@ -15,7 +15,7 @@ import java.nio.channels.FileChannel
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-class DigitClassifier(private val context: Context) {
+class CharClassifier (private val context: Context){
     // TODO: Add a TF Lite interpreter as a field.
     private var interpreter: Interpreter? = null
     var isInitialized = false

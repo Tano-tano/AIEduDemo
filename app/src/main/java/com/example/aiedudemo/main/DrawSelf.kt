@@ -1,5 +1,7 @@
 package com.example.aiedudemo.main
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.view.SurfaceView
 import android.view.View
@@ -7,67 +9,45 @@ import android.view.ViewTreeObserver
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+//import com.divyanshu.draw.widget.DrawView
+import com.mtjin.library.DrawView
 import com.example.aiedudemo.R
 import com.example.aiedudemo.view.DrawSurfaceView
 
 class DrawSelf : AppCompatActivity(){
+    private var drawView: DrawView? = null
+    private var resetButton: Button? = null
+    private var saveButton: Button? = null
+    private var pics: TextView? = null
 
-    var surfaceViewWidth: Int? = null
-    var surfaceViewHeight: Int? = null
-    var drawSurfaceView: DrawSurfaceView? = null
-
-    /// 拡張関数
-    // ViewTreeObserverを使ってViewが作成されてからsurfaceViewのサイズ取得
-    private inline fun <T : View> T.afterMeasure(crossinline f: T.() -> Unit) {
-        viewTreeObserver.addOnGlobalLayoutListener(object :
-            ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                if (width > 0 && height > 0) {
-                    viewTreeObserver.removeOnGlobalLayoutListener(this)
-                    f()
-                }
-            }
-        })
-    }
-
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.drawself)
 
-        var surfaceView = findViewById<View>(R.id.surfaceView)
-        var resetBtn = findViewById<Button>(R.id.resetBtn)
-        var saveBtn = findViewById<Button>(R.id.saveBtn)
-        var pics = findViewById<TextView>(R.id.picsnum)
+        drawView = findViewById(R.id.draw_view)
+        drawView?.setStrokeWidth(70.0f)
+        drawView?.setPenColor(Color.WHITE)
+        drawView?.setBackgroundColor(Color.BLACK)
+        resetButton = findViewById(R.id.resetBtn)
+        saveButton = findViewById(R.id.saveBtn)
+        pics = findViewById(R.id.picsnum)
 
-        /// ViewTreeObserberを使用
-        /// surfaceViewが生成し終わってからsurfaceViewのサイズを取得
-        surfaceView.afterMeasure {
-            surfaceViewWidth = surfaceView.width
-            surfaceViewHeight = surfaceView.height
-            //// DrawrSurfaceViewのセットとインスタンス生成
-            drawSurfaceView = DrawSurfaceView(
-                applicationContext,
-                surfaceView as SurfaceView,
-                surfaceViewWidth!!,
-                surfaceViewHeight!!
-            )
-            /// リスナーのセット
-            surfaceView.setOnTouchListener { v, event -> drawSurfaceView!!.onTouch(event) }
-        }
 
         /// リセットボタン
-        resetBtn.setOnClickListener {
-            drawSurfaceView!!.reset()   /// bitmap初期化メソッドを呼び出す
+        resetButton?.setOnClickListener {
+            drawView?.clear()  /// bitmap初期化メソッドを呼び出す
         }
 
         /// 画像の保存
-        saveBtn.setOnClickListener {
-            var x = pics.text.toString()
+        saveButton?.setOnClickListener {
+            var x = pics?.text.toString()
             var add = x.toInt() + 1
 
             if(add <= 5){
-                pics.text = add.toString()
-                drawSurfaceView!!.reset()
+                pics?.text = add.toString()
+                drawView?.saveFileDrawLineGetUri()
+                drawView?.clear()
             }else {
 
             }
