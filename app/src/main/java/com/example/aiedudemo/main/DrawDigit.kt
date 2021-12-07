@@ -1,19 +1,14 @@
 package com.example.aiedudemo.main
 
-import android.content.Context
-import android.graphics.*
 import android.os.Bundle
-import android.util.Log
+import android.view.SurfaceView
 import android.view.View
 import android.view.ViewTreeObserver
+import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.aiedudemo.R
 import com.example.aiedudemo.view.DrawSurfaceView
-import org.pytorch.IValue
-import org.pytorch.Module
-import org.pytorch.torchvision.TensorImageUtils
-import java.io.File
-import java.io.FileOutputStream
 
 class DrawDigit : AppCompatActivity(){
 
@@ -38,28 +33,30 @@ class DrawDigit : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.drawdigit)
+        var surfaceView = findViewById<View>(R.id.surfaceView)
+        var resetBtn = findViewById<Button>(R.id.resetBtn)
+        var resultNum = findViewById<TextView>(R.id.resultNum)
 
+        /// ViewTreeObserberを使用
+        /// surfaceViewが生成し終わってからsurfaceViewのサイズを取得
+        surfaceView.afterMeasure {
+            surfaceViewWidth = surfaceView.width
+            surfaceViewHeight = surfaceView.height
+            //// DrawrSurfaceViewのセットとインスタンス生成
+            drawSurfaceView = DrawSurfaceView(
+                applicationContext,
+                surfaceView as SurfaceView,
+                surfaceViewWidth!!,
+                surfaceViewHeight!!
+            )
+            /// リスナーのセット
+            surfaceView.setOnTouchListener { v, event -> drawSurfaceView!!.onTouch(event) }
+        }
 
-//        /// ViewTreeObserberを使用
-//        /// surfaceViewが生成し終わってからsurfaceViewのサイズを取得
-//        surfaceView.afterMeasure {
-//            surfaceViewWidth = surfaceView.width
-//            surfaceViewHeight = surfaceView.height
-//            //// DrawrSurfaceViewのセットとインスタンス生成
-//            drawSurfaceView = DrawSurfaceView(
-//                applicationContext,
-//                surfaceView,
-//                surfaceViewWidth!!,
-//                surfaceViewHeight!!
-//            )
-//            /// リスナーのセット
-//            surfaceView.setOnTouchListener { v, event -> drawSurfaceView!!.onTouch(event) }
-//        }
-//
-//        /// リセットボタン
-//        resetBtn.setOnClickListener {
-//            drawSurfaceView!!.reset()   /// bitmap初期化メソッドを呼び出す
-//            resultNum.text = "？"
-//        }
+        /// リセットボタン
+        resetBtn.setOnClickListener {
+            drawSurfaceView!!.reset()   /// bitmap初期化メソッドを呼び出す
+            resultNum.text = "？"
+        }
     }
 }
