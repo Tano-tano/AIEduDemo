@@ -3,12 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/ryota/AndroidStudioProjects/AIEduDemo/app/src/main/res/layout/drawchar.xml" value="0.13385416666666666" />
-        <entry key="..\:/Users/ryota/AndroidStudioProjects/AIEduDemo/app/src/main/res/layout/drawdigit.xml" value="0.2" />
-        <entry key="..\:/Users/ryota/AndroidStudioProjects/AIEduDemo/app/src/main/res/layout/drawself.xml" value="0.4" />
         <entry key="app/src/main/res/drawable/circle.xml" value="0.20625" />
         <entry key="app/src/main/res/layout/drawchar.xml" value="0.1921875" />
         <entry key="app/src/main/res/layout/drawdigit.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/drawself.xml" value="0.346875" />
         <entry key="app/src/main/res/layout/fragment_menu_experiment.xml" value="0.1921875" />
         <entry key="app/src/main/res/layout/fragment_menu_study.xml" value="0.1921875" />
         <entry key="app/src/main/res/layout/menu.xml" value="0.25" />

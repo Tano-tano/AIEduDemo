@@ -1,6 +1,9 @@
 package com.example.aiedudemo.main
 
+import android.content.Context
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.SurfaceView
 import android.view.View
 import android.view.ViewTreeObserver
@@ -9,6 +12,11 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.aiedudemo.R
 import com.example.aiedudemo.view.DrawSurfaceView
+import org.pytorch.IValue
+import org.pytorch.Module
+import org.pytorch.torchvision.TensorImageUtils
+import java.io.File
+import java.io.FileOutputStream
 
 class DrawDigit : AppCompatActivity(){
 
@@ -33,6 +41,7 @@ class DrawDigit : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.drawdigit)
+        var inferBtn = findViewById<Button>(R.id.inferBtn)
         var surfaceView = findViewById<View>(R.id.surfaceView)
         var resetBtn = findViewById<Button>(R.id.resetBtn)
         var resultNum = findViewById<TextView>(R.id.resultNum)
