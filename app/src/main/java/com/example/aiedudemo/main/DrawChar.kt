@@ -21,7 +21,7 @@ class DrawChar : AppCompatActivity(){
     private var inferButton: Button? = null
     private var resultnum: TextView? = null
 
-    private var digitClassifier = DigitClassifier(this)
+    private var charClassifier = CharClassifier(this)
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +53,7 @@ class DrawChar : AppCompatActivity(){
             classifyDrawing()
         }
 
-        digitClassifier
+        charClassifier
             .initialize()
             .addOnFailureListener{e -> Log.e(ContentValues.TAG, "Error", e)}
     }
@@ -61,15 +61,15 @@ class DrawChar : AppCompatActivity(){
     override fun onDestroy() {
         // Sync DigitClassifier instance lifecycle with MainActivity lifecycle,
         // and free up resources (e.g. TF Lite instance) once the activity is destroyed.
-        digitClassifier.close()
+        charClassifier.close()
         super.onDestroy()
     }
 
     private fun classifyDrawing() {
         val bitmap = drawView?.getBitmap()
 
-        if ((bitmap != null) && (digitClassifier.isInitialized)) {
-            digitClassifier
+        if ((bitmap != null) && (charClassifier.isInitialized)) {
+            charClassifier
                 .classifyAsync(bitmap)
                 .addOnSuccessListener { resultText -> resultnum?.text = resultText }
                 .addOnFailureListener { e ->

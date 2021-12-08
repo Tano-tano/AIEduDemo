@@ -1,8 +1,10 @@
 package com.example.aiedudemo.main
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.SurfaceView
 import android.view.View
 import android.view.ViewTreeObserver
@@ -46,7 +48,8 @@ class DrawSelf : AppCompatActivity(){
 
             if(add <= 5){
                 pics?.text = add.toString()
-                drawView?.saveFileDrawLineGetUri()
+                var x = drawView?.saveFileDrawViewGetUri()
+                Log.d(TAG,"===============$x=================")
                 drawView?.clear()
             }else {
 

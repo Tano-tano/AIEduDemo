@@ -6,47 +6,50 @@ import android.graphics.Bitmap
 import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.TaskCompletionSource
+import com.google.android.gms.tasks.Tasks.call
 import org.tensorflow.lite.Interpreter
 import java.io.FileInputStream
 import java.io.IOException
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.channels.FileChannel
+import java.util.concurrent.Callable
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class CharClassifier (private val context: Context){
-    // TODO: Add a TF Lite interpreter as a field.
     private var interpreter: Interpreter? = null
     var isInitialized = false
         private set
 
-    /** Executor to run inference task in the background. */
+    /** Executor to run inference task in the background */
     private val executorService: ExecutorService = Executors.newCachedThreadPool()
 
-    private var inputImageWidth: Int = 0 // will be inferred from TF Lite model.
-    private var inputImageHeight: Int = 0 // will be inferred from TF Lite model.
-    private var modelInputSize: Int = 0 // will be inferred from TF Lite model.
+    private var inputImageWidth: Int = 0 // will be inferred from TF Lite model
+    private var inputImageHeight: Int = 0 // will be inferred from TF Lite model
+    private var modelInputSize: Int = 0 // will be inferred from TF Lite model
 
-    fun initialize(): Task<Void?> {
-        val task = TaskCompletionSource<Void?>()
-        executorService.execute {
-            try {
+    fun initialize(): Task<Void> {
+        return call(
+            executorService,
+            Callable<Void> {
                 initializeInterpreter()
-                task.setResult(null)
-            } catch (e: IOException) {
-                task.setException(e)
+                null
             }
-        }
-        return task.task
+        )
     }
 
     @Throws(IOException::class)
     private fun initializeInterpreter() {
-        // TODO: Load the TF Lite model from file and initialize an interpreter.
+        // Load the TF Lite model
         val assetManager = context.assets
-        val model = loadModelFile(assetManager, "improved.tflite")
-        val interpreter = Interpreter(model)
+        val model = loadModelFile(assetManager)
+
+        // Initialize TF Lite Interpreter with NNAPI enabled
+        val options = Interpreter.Options()
+        options.setUseNNAPI(true)
+        val interpreter = Interpreter(model, options)
+
         // Read input shape from model file
         val inputShape = interpreter.getInputTensor(0).shape()
         inputImageWidth = inputShape[1]
@@ -60,8 +63,8 @@ class CharClassifier (private val context: Context){
     }
 
     @Throws(IOException::class)
-    private fun loadModelFile(assetManager: AssetManager, filename: String): ByteBuffer {
-        val fileDescriptor = assetManager.openFd(filename)
+    private fun loadModelFile(assetManager: AssetManager): ByteBuffer {
+        val fileDescriptor = assetManager.openFd(MODEL_FILE)
         val inputStream = FileInputStream(fileDescriptor.fileDescriptor)
         val fileChannel = inputStream.channel
         val startOffset = fileDescriptor.startOffset
@@ -69,49 +72,44 @@ class CharClassifier (private val context: Context){
         return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength)
     }
 
+
     private fun classify(bitmap: Bitmap): String {
-        check(isInitialized) { "TF Lite Interpreter is not initialized yet." }
+        if (!isInitialized) {
+            throw IllegalStateException("TF Lite Interpreter is not initialized yet.")
+        }
 
-        // TODO: Add code to run inference with TF Lite.
-        // Preprocessing: resize the input image to match the model input shape.
-        val resizedImage = Bitmap.createScaledBitmap(
-            bitmap,
-            inputImageWidth,
-            inputImageHeight,
-            true
-        )
+        var startTime: Long
+        var elapsedTime: Long
+
+        // Preprocessing: resize the input
+        startTime = System.nanoTime()
+        val resizedImage = Bitmap.createScaledBitmap(bitmap, inputImageWidth, inputImageHeight, true)
         val byteBuffer = convertBitmapToByteBuffer(resizedImage)
+        elapsedTime = (System.nanoTime() - startTime) / 1000000
+        Log.d(TAG, "Preprocessing time = " + elapsedTime + "ms")
 
-        // Define an array to store the model output.
-        val output = Array(1) { FloatArray(OUTPUT_CLASSES_COUNT) }
+        startTime = System.nanoTime()
+        val result = Array(1) { FloatArray(OUTPUT_CLASSES_COUNT) }
+        interpreter?.run(byteBuffer, result)
+        elapsedTime = (System.nanoTime() - startTime) / 1000000
+        Log.d(TAG, "Inference time = " + elapsedTime + "ms")
 
-        // Run inference with the input data.
-        interpreter?.run(byteBuffer, output)
-
-        // Post-processing: find the digit that has the highest probability
-        // and return it a human-readable string.
-        val result = output[0]
-        val maxIndex = result.indices.maxByOrNull { result[it] } ?: -1
-
-        return "%d".format(maxIndex)
+        return getOutputString(result[0])
     }
 
-    fun classifyAsync(bitmap: Bitmap?): Task<String> {
-        val task = TaskCompletionSource<String>()
-        executorService.execute {
-            val result = bitmap?.let { classify(it) }
-            task.setResult(result)
-        }
-        return task.task
+    fun classifyAsync(bitmap: Bitmap): Task<String> {
+        return call(executorService, Callable { classify(bitmap) })
     }
 
     fun close() {
-        executorService.execute {
-            // TODO: close the TF Lite interpreter here
-            interpreter?.close()
-
-            Log.d(TAG, "Closed TFLite interpreter.")
-        }
+        call(
+            executorService,
+            Callable<String> {
+                interpreter?.close()
+                Log.d(TAG, "Closed TFLite interpreter.")
+                null
+            }
+        )
     }
 
     private fun convertBitmapToByteBuffer(bitmap: Bitmap): ByteBuffer {
@@ -126,20 +124,27 @@ class CharClassifier (private val context: Context){
             val g = (pixelValue shr 8 and 0xFF)
             val b = (pixelValue and 0xFF)
 
-            // Convert RGB to grayscale and normalize pixel value to [0..1].
-            val normalizedPixelValue = (r + g + b) / 3.0f / 255.0f
+            val normalizedPixelValue = 1 - ((r + g + b) / 3.0f / 255.0f)
             byteBuffer.putFloat(normalizedPixelValue)
         }
 
         return byteBuffer
     }
 
+    private fun getOutputString(output: FloatArray): String {
+        val maxIndex = output.indices.maxByOrNull { output[it] } ?: -1
+        val classes = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabdefghnqrt"
+        return "%c".format(classes[maxIndex])
+    }
+
     companion object {
-        private const val TAG = "DigitClassifier"
+        private const val TAG = "CharacterClassifier"
+
+        private const val MODEL_FILE = "emnist_imp.tflite"
 
         private const val FLOAT_TYPE_SIZE = 4
         private const val PIXEL_SIZE = 1
 
-        private const val OUTPUT_CLASSES_COUNT = 10
+        private const val OUTPUT_CLASSES_COUNT = 47
     }
 }
