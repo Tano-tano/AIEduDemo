@@ -5,7 +5,6 @@ import android.content.res.AssetManager
 import android.graphics.Bitmap
 import android.util.Log
 import com.google.android.gms.tasks.Task
-import com.google.android.gms.tasks.TaskCompletionSource
 import com.google.android.gms.tasks.Tasks.call
 import org.tensorflow.lite.Interpreter
 import java.io.FileInputStream
@@ -32,7 +31,7 @@ class CharClassifier (private val context: Context){
     fun initialize(): Task<Void> {
         return call(
             executorService,
-            Callable<Void> {
+            {
                 initializeInterpreter()
                 null
             }
@@ -98,7 +97,7 @@ class CharClassifier (private val context: Context){
     }
 
     fun classifyAsync(bitmap: Bitmap): Task<String> {
-        return call(executorService, Callable { classify(bitmap) })
+        return call(executorService, { classify(bitmap) })
     }
 
     fun close() {
@@ -138,9 +137,9 @@ class CharClassifier (private val context: Context){
     }
 
     companion object {
-        private const val TAG = "CharacterClassifier"
+        private const val TAG = "CharClassifier"
 
-        private const val MODEL_FILE = "emnist_imp.tflite"
+        private const val MODEL_FILE = "model.tflite"
 
         private const val FLOAT_TYPE_SIZE = 4
         private const val PIXEL_SIZE = 1

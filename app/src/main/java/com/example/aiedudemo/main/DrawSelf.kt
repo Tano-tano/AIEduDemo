@@ -1,20 +1,19 @@
 package com.example.aiedudemo.main
 
+//import com.divyanshu.draw.widget.DrawView
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.util.Log
-import android.view.SurfaceView
-import android.view.View
-import android.view.ViewTreeObserver
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-//import com.divyanshu.draw.widget.DrawView
-import com.mtjin.library.DrawView
 import com.example.aiedudemo.R
-import com.example.aiedudemo.view.DrawSurfaceView
+import com.mtjin.library.DrawView
 
 class DrawSelf : AppCompatActivity(){
     private var drawView: DrawView? = null
@@ -50,10 +49,31 @@ class DrawSelf : AppCompatActivity(){
                 pics?.text = add.toString()
                 var x = drawView?.saveFileDrawViewGetUri()
                 Log.d(TAG,"===============$x=================")
+                var y = x?.let { it1 -> getFileName(this, it1) }
+                Log.d(TAG,"===============$y=================")
                 drawView?.clear()
             }else {
 
             }
         }
     }
+
+    private fun getFileName(context: Context, uri: Uri): String? {
+
+        if (uri.scheme == "content") {
+            val cursor = context.contentResolver.query(uri, null, null, null, null)
+            cursor.use {
+                if (cursor != null) {
+                    if(cursor.moveToFirst()) {
+                        return cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+                    }
+                }
+            }
+        }
+
+        return uri.path?.substring(uri.path!!.lastIndexOf('/') + 1)
+    }
+
+
+
 }
