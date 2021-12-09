@@ -1,8 +1,10 @@
 package com.example.aiedudemo.main
 
+import android.Manifest
 import android.os.Bundle
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -16,6 +18,11 @@ class Menu : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.menu)
+
+
+        // write permission to access the storage
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
 
         //var tab_toolbar = findViewById<Toolbar>(R.id.toolbar)
         val tab_viewpager = findViewById<ViewPager>(R.id.tab_viewpager)
