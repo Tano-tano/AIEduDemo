@@ -5,15 +5,11 @@ import android.content.ContentValues
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.SurfaceView
-import android.view.View
-import android.view.ViewTreeObserver
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.divyanshu.draw.widget.DrawView
 import com.example.aiedudemo.R
-import com.example.aiedudemo.view.DrawSurfaceView
 
 class DrawChar : AppCompatActivity(){
     private var drawView: DrawView? = null
