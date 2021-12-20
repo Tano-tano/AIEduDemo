@@ -11,9 +11,11 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doAfterTextChanged
 import com.example.aiedudemo.R
 import com.example.aiedudemo.view.DrawCanvas
 import java.io.File
@@ -23,31 +25,49 @@ import java.io.OutputStream
 
 class DrawSelf : AppCompatActivity(){
     private var page = 1
+    private var directoryName = ""
+
+    private lateinit var drawView: DrawCanvas
+    private lateinit var resetBtn: Button
+    private lateinit var saveBtn: Button
+    private lateinit var picsNum: TextView
+    private lateinit var editText: EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.drawself)
 
         //５）Viewの取得⇒クリア処理
-        val drawView: DrawCanvas = findViewById(R.id.draw_view)
-        val resetBtn: Button = findViewById(R.id.resetBtn)
-        val saveBtn: Button = findViewById(R.id.saveBtn)
-        val picsNum: TextView = findViewById(R.id.picsnum)
+        drawView= findViewById(R.id.draw_view)
+        resetBtn= findViewById(R.id.resetBtn)
+        saveBtn = findViewById(R.id.saveBtn)
+        picsNum= findViewById(R.id.picsnum)
+        editText = findViewById(R.id.edit_text)
 
         picsNum.text = page.toString()
+        saveBtn.isEnabled = false
+
 
         resetBtn.setOnClickListener {
             drawView.clearCanvas()
         }
 
         saveBtn.setOnClickListener {
+            directoryName = editText.text.toString()
             var filename = picsNum.text.toString()
             val bitmap = getScreenShotFromView(drawView)
             if(bitmap != null){
-                saveMediaToStorage(bitmap, filename)
+                saveMediaToStorage(bitmap, filename, directoryName)
             }
             page += 1
             picsNum.text = page.toString()
             drawView.clearCanvas()
+        }
+
+        editText.doAfterTextChanged {
+            if(editText.text.toString() != ""){
+                saveBtn.isEnabled = true
+            }
         }
     }
 
@@ -72,7 +92,7 @@ class DrawSelf : AppCompatActivity(){
     }
 
     // this method saves the image to gallery
-    private fun saveMediaToStorage(bitmap: Bitmap, f: String) {
+    private fun saveMediaToStorage(bitmap: Bitmap, f: String, d: String) {
         // Generating a file name
         val filename = "$f.png"
 
@@ -91,7 +111,7 @@ class DrawSelf : AppCompatActivity(){
                     // putting file information in content values
                     put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
                     put(MediaStore.MediaColumns.MIME_TYPE, "image/png")
-                    put(MediaStore.MediaColumns.RELATIVE_PATH, "Pictures/AIEduDemo/")
+                    put(MediaStore.MediaColumns.RELATIVE_PATH, "Pictures/AIEduDemo/$d")
                 }
 
                 // Inserting the contentValues to
@@ -103,7 +123,7 @@ class DrawSelf : AppCompatActivity(){
             }
         } else {
             // These for devices running on android < Q
-            val imagesDir = File("${Environment.getExternalStorageDirectory()}/AIEduDemo/")
+            val imagesDir = File("${Environment.getExternalStorageDirectory()}/AIEduDemo/$d")
             if(!imagesDir.exists()){
                 imagesDir.mkdirs()
             }
@@ -114,7 +134,7 @@ class DrawSelf : AppCompatActivity(){
         fos?.use {
             // Finally writing the bitmap to the output stream that we opened
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
-            Toast.makeText(this , "Captured View and saved to Gallery" , Toast.LENGTH_SHORT).show()
+            Toast.makeText(this , "$filename saved to Gallery" , Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -17,6 +17,7 @@ class DrawChar : AppCompatActivity(){
     private var inferButton: Button? = null
     private var resultnum: TextView? = null
 
+
     private var charClassifier = CharClassifier(this)
 
     @SuppressLint("ClickableViewAccessibility")
