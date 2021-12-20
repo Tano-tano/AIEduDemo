@@ -23,6 +23,8 @@ class DrawCanvas(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         super.onDraw(canvas)
         paint.color =Color.WHITE//色
         paint.style=Paint.Style.STROKE//描画のスタイルを線にする
+        paint.strokeJoin = Paint.Join.MITER
+        paint.strokeCap = Paint.Cap.ROUND
         paint.strokeWidth = 70F//幅
         canvas?.drawPath(path,paint)
     }
