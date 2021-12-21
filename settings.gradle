@@ -8,4 +8,3 @@ dependencyResolutionManagement {
 }
 rootProject.name = "AIEduDemo"
 include ':app'
-include ':DrawViewImproved'
