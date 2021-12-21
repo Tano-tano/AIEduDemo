@@ -15,7 +15,9 @@ class DrawChar : AppCompatActivity(){
     private var drawView: DrawView? = null
     private var resetButton: Button? = null
     private var inferButton: Button? = null
+    private var backButton: Button? = null
     private var resultnum: TextView? = null
+
 
 
     private var charClassifier = CharClassifier(this)
@@ -31,6 +33,7 @@ class DrawChar : AppCompatActivity(){
         drawView?.setBackgroundColor(Color.BLACK)
         resetButton = findViewById(R.id.resetBtn)
         inferButton = findViewById(R.id.inferBtn)
+        backButton = findViewById(R.id.backBtn)
         resultnum = findViewById(R.id.resultNum)
 
         //リセットボタンの処理
@@ -48,6 +51,11 @@ class DrawChar : AppCompatActivity(){
         //推定処理
         inferButton?.setOnClickListener {
             classifyDrawing()
+        }
+
+        //戻るボタン
+        backButton?.setOnClickListener {
+            finish()
         }
 
         charClassifier

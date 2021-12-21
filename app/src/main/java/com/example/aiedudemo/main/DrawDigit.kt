@@ -15,6 +15,7 @@ class DrawDigit : AppCompatActivity(){
     private var drawView: DrawView? = null
     private var resetButton: Button? = null
     private var inferButton: Button? = null
+    private var backButton: Button? = null
     private var resultnum: TextView? = null
 
     private var digitClassifier = DigitClassifier(this)
@@ -30,6 +31,7 @@ class DrawDigit : AppCompatActivity(){
         drawView?.setBackgroundColor(Color.BLACK)
         resetButton = findViewById(R.id.resetBtn)
         inferButton = findViewById(R.id.inferBtn)
+        backButton = findViewById(R.id.backBtn)
         resultnum = findViewById(R.id.resultNum)
 
         //リセットボタンの処理
@@ -47,6 +49,11 @@ class DrawDigit : AppCompatActivity(){
         //推定処理
         inferButton?.setOnClickListener {
             classifyDrawing()
+        }
+
+        //戻るボタン
+        backButton?.setOnClickListener {
+            finish()
         }
 
         digitClassifier

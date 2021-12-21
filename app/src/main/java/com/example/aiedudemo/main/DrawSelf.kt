@@ -1,6 +1,7 @@
 package com.example.aiedudemo.main
 
 import android.content.ContentValues
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.net.Uri
@@ -28,46 +29,62 @@ class DrawSelf : AppCompatActivity(){
     private var directoryName = ""
 
     private lateinit var drawView: DrawCanvas
-    private lateinit var resetBtn: Button
-    private lateinit var saveBtn: Button
-    private lateinit var picsNum: TextView
-    private lateinit var editText: EditText
+    private var resetBtn: Button? = null
+    private var saveBtn: Button? = null
+    private var nextBtn: Button? = null
+    private var backBtn: Button? = null
+    private var picsNum: TextView? = null
+    private var editText: EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.drawself)
 
         //５）Viewの取得⇒クリア処理
-        drawView= findViewById(R.id.draw_view)
-        resetBtn= findViewById(R.id.resetBtn)
+        drawView = findViewById(R.id.draw_view)
+        resetBtn = findViewById(R.id.resetBtn)
         saveBtn = findViewById(R.id.saveBtn)
-        picsNum= findViewById(R.id.picsnum)
+        nextBtn = findViewById(R.id.nextBtn)
+        backBtn = findViewById(R.id.backBtn)
+        picsNum = findViewById(R.id.picsnum)
         editText = findViewById(R.id.edit_text)
 
-        picsNum.text = page.toString()
-        saveBtn.isEnabled = false
+        picsNum?.text = page.toString()
+        saveBtn?.isEnabled = false
 
-
-        resetBtn.setOnClickListener {
+        //キャンバスのリセット
+        resetBtn?.setOnClickListener {
             drawView.clearCanvas()
         }
 
-        saveBtn.setOnClickListener {
-            directoryName = editText.text.toString()
-            var filename = picsNum.text.toString()
+        //モデルを取り込む画面へ移行
+        nextBtn?.setOnClickListener {
+            val intent = Intent(application, ImportModel::class.java)
+            startActivity(intent)
+        }
+
+        //戻るボタン
+        backBtn?.setOnClickListener {
+            finish()
+        }
+
+
+        //画像の保存
+        saveBtn?.setOnClickListener {
+            directoryName = editText?.text.toString()
+            val filename = picsNum?.text.toString()
             val bitmap = getScreenShotFromView(drawView)
             if(bitmap != null){
                 saveMediaToStorage(bitmap, filename, directoryName)
             }
             page += 1
-            picsNum.text = page.toString()
+            picsNum?.text = page.toString()
             drawView.clearCanvas()
         }
 
-        editText.doAfterTextChanged {
-            if(editText.text.toString() != ""){
-                saveBtn.isEnabled = true
-            }
+        //文字の更新を監視
+        editText?.doAfterTextChanged {
+            saveBtn?.isEnabled = editText?.text.toString() != ""
         }
     }
 

@@ -22,6 +22,7 @@
         <activity android:name=".main.DrawDigit"/>
         <activity android:name=".main.DrawChar"/>
         <activity android:name=".main.DrawSelf"/>
+        <activity android:name=".main.ImportModel"/>
 
     </application>
 
