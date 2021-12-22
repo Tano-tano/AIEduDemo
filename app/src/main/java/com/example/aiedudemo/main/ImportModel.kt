@@ -1,7 +1,6 @@
 package com.example.aiedudemo.main
 
 import android.annotation.SuppressLint
-import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -14,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.divyanshu.draw.widget.DrawView
 import com.example.aiedudemo.R
+import java.io.InputStream
 
 class ImportModel: AppCompatActivity() {
     var openFile:Button? = null
@@ -63,7 +63,6 @@ class ImportModel: AppCompatActivity() {
             try {
                 result.data?.data?.also { uri : Uri ->
                     val inputStream = contentResolver?.openInputStream(uri)
-
                 }
             } catch (e: Exception) {
                 Toast.makeText(this, "エラーが発生しました", Toast.LENGTH_LONG).show()
@@ -77,6 +76,10 @@ class ImportModel: AppCompatActivity() {
             type = "*/*"
         }
         launcher.launch(intent)
+    }
+
+    private fun copyFile(inputStream: InputStream?) {
+
     }
 
 }

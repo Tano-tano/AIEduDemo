@@ -23,6 +23,10 @@
         <activity android:name=".main.DrawChar"/>
         <activity android:name=".main.DrawSelf"/>
         <activity android:name=".main.ImportModel"/>
+        <activity android:name=".Slide.course1.Course1"/>
+        <activity android:name=".Slide.course2.Course2"/>
+        <activity android:name=".Slide.course3.Course3"/>
+        <activity android:name=".Slide.course4.Course4"/>
 
     </application>
 
