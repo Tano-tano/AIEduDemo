@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">AIEduDemo</string>
-    <string name="start">はじめる</string>
-    <string name="credit">クレジット</string>
-    <string name="end">おわる</string>
     <string name="title_name">手書き文字認識デモ</string>
+    <string name="back">もどる</string>
+    <string name="next">つぎへ</string>
+    <string name="reset">リセット</string>
+    <string name="save">保存</string>
+    <string name="save_char">保存文字:</string>
+    <string name="pics_num">1</string>
+    <string name="pics_nums">枚目</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
