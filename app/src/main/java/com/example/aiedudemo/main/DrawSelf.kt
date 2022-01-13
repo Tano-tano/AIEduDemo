@@ -140,7 +140,7 @@ class DrawSelf : AppCompatActivity(){
             }
         } else {
             // These for devices running on android < Q
-            val imagesDir = File("${Environment.getExternalStorageDirectory()}/AIEduDemo/$d")
+            val imagesDir = File("${Environment.getExternalStorageDirectory()}/Pictures/AIEduDemo/$d")
             if(!imagesDir.exists()){
                 imagesDir.mkdirs()
             }
