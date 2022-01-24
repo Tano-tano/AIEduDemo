@@ -1,6 +1,7 @@
 package com.example.aiedudemo.main
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -16,20 +17,19 @@ import com.example.aiedudemo.R
 import java.io.InputStream
 
 class ImportModel: AppCompatActivity() {
-    var openFile:Button? = null
     private var drawView: DrawView? = null
     private var resetButton: Button? = null
     private var inferButton: Button? = null
     private var backButton: Button? = null
     private var resultnum: TextView? = null
 
+    private var selfClassifier = SelfClassifier(this)
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.importmodel)
 
-        openFile = findViewById(R.id.openFile)
         drawView = findViewById(R.id.draw_view)
         drawView?.setStrokeWidth(70.0f)
         drawView?.setColor(Color.WHITE)
@@ -39,9 +39,10 @@ class ImportModel: AppCompatActivity() {
         backButton = findViewById(R.id.backBtn)
         resultnum = findViewById(R.id.resultNum)
 
-        //自作モデルをインポートする
-        openFile?.setOnClickListener {
-            selectFile()
+        //リセットボタンの処理
+        resetButton?.setOnClickListener {
+            drawView?.clearCanvas()
+            resultnum?.text = "?"
         }
 
         //描画処理
@@ -50,37 +51,40 @@ class ImportModel: AppCompatActivity() {
             true
         }
 
+        //推定処理
+        inferButton?.setOnClickListener {
+            classifyDrawing()
+        }
+
+        //戻るボタン
+        backButton?.setOnClickListener {
+            finish()
+        }
+
+        selfClassifier
+            .initialize()
+            .addOnFailureListener{e -> Log.e(ContentValues.TAG, "Error", e)}
 
     }
 
-    private val launcher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        Log.d("registerForActivityResult(result)", result.toString())
+    override fun onDestroy() {
+        // Sync DigitClassifier instance lifecycle with MainActivity lifecycle,
+        // and free up resources (e.g. TF Lite instance) once the activity is destroyed.
+        selfClassifier.close()
+        super.onDestroy()
+    }
 
-        if (result.resultCode != RESULT_OK) {
-            return@registerForActivityResult
-        } else {
-            try {
-                result.data?.data?.also { uri : Uri ->
-                    val inputStream = contentResolver?.openInputStream(uri)
+    private fun classifyDrawing() {
+        val bitmap = drawView?.getBitmap()
+
+        if ((bitmap != null) && (selfClassifier.isInitialized)) {
+            selfClassifier
+                .classifyAsync(bitmap)
+                .addOnSuccessListener { resultText -> resultnum?.text = resultText }
+                .addOnFailureListener { e ->
+                    resultnum?.text = "-"
+                    Log.e(ContentValues.TAG, "Error classifying drawing.", e)
                 }
-            } catch (e: Exception) {
-                Toast.makeText(this, "エラーが発生しました", Toast.LENGTH_LONG).show()
-            }
         }
     }
-
-    private fun selectFile(){
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-            addCategory(Intent.CATEGORY_OPENABLE)
-            type = "*/*"
-        }
-        launcher.launch(intent)
-    }
-
-    private fun copyFile(inputStream: InputStream?) {
-
-    }
-
 }

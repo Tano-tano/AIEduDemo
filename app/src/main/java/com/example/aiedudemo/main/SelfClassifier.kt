@@ -49,8 +49,7 @@ class SelfClassifier(private val context: Context) {
     @Throws(IOException::class)
     private fun initializeInterpreter() {
         // TODO: Load the TF Lite model from file and initialize an interpreter.
-
-        val model = loadMappedFile("test_model.tflite")
+        val model = loadMappedFile("emnist.tflite")
         val interpreter = Interpreter(model)
         // Read input shape from model file
         val inputShape = interpreter.getInputTensor(0).shape()
