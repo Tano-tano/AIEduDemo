@@ -26,7 +26,7 @@ class MenuStudy : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val array = arrayOf("機械学習とは", "機械学習の使用例", "画像認識について", "画像認識精度")
+        val array = arrayOf("深層学習とは", "深層学習の使用例", "画像認識について", "画像認識精度")
         val listview = view.findViewById<ListView>(R.id.list_study)
 
         val adapter = ArrayAdapter(this.requireContext(),//Fragment上でContextを持ってくるにはrequireContext()が必要

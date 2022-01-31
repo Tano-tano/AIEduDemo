@@ -49,7 +49,7 @@ class SelfClassifier(private val context: Context) {
     @Throws(IOException::class)
     private fun initializeInterpreter() {
         // TODO: Load the TF Lite model from file and initialize an interpreter.
-        val model = loadMappedFile("emnist.tflite")
+        val model = loadMappedFile("improved.tflite")
         val interpreter = Interpreter(model)
         // Read input shape from model file
         val inputShape = interpreter.getInputTensor(0).shape()
@@ -153,11 +153,11 @@ class SelfClassifier(private val context: Context) {
     }
 
     companion object {
-        private const val TAG = "CharClassifier"
+        private const val TAG = "SelfClassifier"
 
         private const val FLOAT_TYPE_SIZE = 4
         private const val PIXEL_SIZE = 1
-        private const val LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        private const val OUTPUT_CLASSES_COUNT = 26
+        private const val LETTERS = "0123456789"
+        private const val OUTPUT_CLASSES_COUNT = LETTERS.length
     }
 }
