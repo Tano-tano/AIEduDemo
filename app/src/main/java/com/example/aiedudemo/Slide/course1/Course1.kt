@@ -9,6 +9,7 @@ import com.example.aiedudemo.adapter.AdapterCourse1
 import com.example.aiedudemo.fragments.Course1.c1p1
 import com.example.aiedudemo.fragments.Course1.c1p2
 import com.example.aiedudemo.fragments.Course1.c1p3
+import com.example.aiedudemo.fragments.Course1.c1p4
 
 class Course1: AppCompatActivity() {
     private var viewPager1: ViewPager2? = null
@@ -21,7 +22,8 @@ class Course1: AppCompatActivity() {
         val fragmentList = arrayListOf<Fragment>(
             c1p1(),
             c1p2(),
-            c1p3()
+            c1p3(),
+            c1p4()
         )
 
         /// adapterのインスタンス生成

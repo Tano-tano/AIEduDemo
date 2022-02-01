@@ -20,11 +20,16 @@
         <entry key="app/src/main/res/layout/drawdigit.xml" value="0.22" />
         <entry key="app/src/main/res/layout/drawself.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_c1p1.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/fragment_c1p2.xml" value="0.15982905982905982" />
+        <entry key="app/src/main/res/layout/fragment_c1p3.xml" value="0.15982905982905982" />
+        <entry key="app/src/main/res/layout/fragment_c1p4.xml" value="0.15982905982905982" />
+        <entry key="app/src/main/res/layout/fragment_c2p3.xml" value="0.15982905982905982" />
         <entry key="app/src/main/res/layout/fragment_menu_experiment.xml" value="0.1921875" />
         <entry key="app/src/main/res/layout/fragment_menu_study.xml" value="0.1921875" />
         <entry key="app/src/main/res/layout/importmodel.xml" value="0.346875" />
         <entry key="app/src/main/res/layout/menu.xml" value="0.25" />
         <entry key="app/src/main/res/layout/title.xml" value="0.190625" />
+        <entry key="app/src/main/res/menu/menu_fragment.xml" value="0.2833333333333333" />
       </map>
     </option>
   </component>

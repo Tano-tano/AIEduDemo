@@ -6,10 +6,11 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.aiedudemo.fragments.Course1.c1p1
 import com.example.aiedudemo.fragments.Course1.c1p2
 import com.example.aiedudemo.fragments.Course1.c1p3
+import com.example.aiedudemo.fragments.Course1.c1p4
 
 class AdapterCourse1(fa: FragmentActivity) : FragmentStateAdapter(fa) {
     // ページ数を取得
-    override fun getItemCount(): Int = 3
+    override fun getItemCount(): Int = 4
 
     // スワイプ位置によって表示するFragmentを変更
     override fun createFragment(position: Int): Fragment =
@@ -22,6 +23,9 @@ class AdapterCourse1(fa: FragmentActivity) : FragmentStateAdapter(fa) {
             }
             2 -> {
                 c1p3()
+            }
+            3 -> {
+                c1p4()
             }
             else -> {
                 c1p1()

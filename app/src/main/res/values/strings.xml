@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">AIEduDemo</string>
     <string name="title_name">手書き文字認識デモ</string>
-    <string name="back">もどる</string>
+    <string name="back">ホームにもどる</string>
     <string name="next">つぎへ</string>
     <string name="reset">リセット</string>
     <string name="save">保存</string>
@@ -11,14 +11,26 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="c1p1"><h1>深層学習って何?</h1>\n
-    まずは人工知能の話からしましょう。近年話題となっている将棋やチェスの人工知能。これは大量に蓄積されたデータの中から最適を選び人間と同等もしくはそれ以上の
+    <string name="c1p1title">深層学習って何?</string>
+    <string name="c1p1">
+        まずは人工知能の話からしましょう。近年話題となっている将棋やチェスの人工知能。これは大量に蓄積されたデータの中から最適を選び人間と同等もしくはそれ以上の
         答えを導いてくれます。\n
-        では大量に蓄積された知能と言う名のデータはどこから来るのか？それを実現したのが機械学習。これは蓄積されたデータを元に次に起こる
-        ことを予測してくれます。
-        そしてそれを可能にするために研究が進んでいったのが深層学習です。\n
-        これら3つの技術は関係性が深く、同心円状にするとわかりやすくなります。
+    </string>
 
+    <string name="c1p2title">大量のデータは\nどこから？</string>
+    <string name="c1p2">
+        それを実現したのが機械学習。これは蓄積されたデータを元に次に起こることを予測してくれますがイレギュラーに弱く不安定でした。
+    </string>
+
+    <string name="c1p3title">安定を求めて</string>
+    <string name="c1p3">
+        安定を求め人間の脳構造をもとに研究が進んでいったのが深層学習です。\n
+        例えば画像をタイルで無数に分けてタイルごとの特徴を捉えることで正確性を上げていきました。
+    </string>
+
+    <string name="c1p4title">まとめ</string>
+    <string name="c1p4">
+        これら3つの技術は関係性が深く、同心円状にするとわかりやすくなります。
     </string>
 
 </resources>

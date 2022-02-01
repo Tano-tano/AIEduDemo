@@ -4,18 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.example.aiedudemo.R
-
-import android.widget.TextView
-import android.content.Intent
-import android.view.MenuInflater
-import androidx.annotation.Nullable
-import com.example.aiedudemo.main.Menu
-
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,21 +14,16 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [page1.newInstance] factory method to
+ * Use the [c1p3.newInstance] factory method to
  * create an instance of this fragment.
  */
-
-class c1p1 : Fragment() {
+class c1p4 : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var backButton: Button? = null
-    private var nextButton: Button? = null
-    private var cnt = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -50,25 +35,7 @@ class c1p1 : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_c1p1, container, false)
-    }
-
-    override fun onViewCreated(view: View, @Nullable savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val args = arguments
-        if (args != null) {
-            val count = args.getInt("Counter")
-            cnt = count + 1
-        }
-        val backButton = view.findViewById<Button>(R.id.backBtn)
-        backButton.setOnClickListener {
-            val intent = Intent(activity, Menu::class.java)
-            startActivity(intent)
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: android.view.Menu, inflater: MenuInflater) {
-        inflater?.inflate(R.menu.menu_fragment, menu)
+        return inflater.inflate(R.layout.fragment_c1p4, container, false)
     }
 
     companion object {
@@ -78,12 +45,12 @@ class c1p1 : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment page1.
+         * @return A new instance of fragment c1p3.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            c1p1().apply {
+            c1p4().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

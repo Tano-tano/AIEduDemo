@@ -19,7 +19,6 @@ class Menu : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.menu)
 
-
         // write permission to access the storage
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
