@@ -15,11 +15,12 @@
         <entry key="..\:/Users/ryota/AndroidStudioProjects/AIEduDemo/app/src/main/res/layout/fragment_menu_study.xml" value="0.12604166666666666" />
         <entry key="..\:/Users/ryota/AndroidStudioProjects/AIEduDemo/app/src/main/res/layout/importmodel.xml" value="0.259375" />
         <entry key="app/src/main/res/drawable/circle.xml" value="0.20625" />
+        <entry key="app/src/main/res/drawable/frame_style.xml" value="0.29743589743589743" />
         <entry key="app/src/main/res/layout/course1.xml" value="0.20427350427350427" />
         <entry key="app/src/main/res/layout/drawchar.xml" value="0.22" />
         <entry key="app/src/main/res/layout/drawdigit.xml" value="0.22" />
         <entry key="app/src/main/res/layout/drawself.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_c1p1.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/fragment_c1p1.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_c1p2.xml" value="0.15982905982905982" />
         <entry key="app/src/main/res/layout/fragment_c1p3.xml" value="0.15982905982905982" />
         <entry key="app/src/main/res/layout/fragment_c1p4.xml" value="0.15982905982905982" />

@@ -4,17 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.example.aiedudemo.R
-
-import android.widget.TextView
-import android.content.Intent
-import android.view.MenuInflater
-import androidx.annotation.Nullable
-import com.example.aiedudemo.main.Menu
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -32,13 +23,10 @@ class c1p1 : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var backButton: Button? = null
-    private var nextButton: Button? = null
     private var cnt = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -51,24 +39,6 @@ class c1p1 : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_c1p1, container, false)
-    }
-
-    override fun onViewCreated(view: View, @Nullable savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val args = arguments
-        if (args != null) {
-            val count = args.getInt("Counter")
-            cnt = count + 1
-        }
-        val backButton = view.findViewById<Button>(R.id.backBtn)
-        backButton.setOnClickListener {
-            val intent = Intent(activity, Menu::class.java)
-            startActivity(intent)
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: android.view.Menu, inflater: MenuInflater) {
-        inflater?.inflate(R.menu.menu_fragment, menu)
     }
 
     companion object {
